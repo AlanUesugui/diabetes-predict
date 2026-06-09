@@ -12,7 +12,7 @@
 |---|---|
 | Alan Uesugui Uemura | 2084808 |
 | Julio Cesar Plaza | 2046253 |
-| Pedro Renat | 2238778 |
+
 
 **Grupo:** 4
 
