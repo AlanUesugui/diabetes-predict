@@ -1,222 +1,188 @@
-# 🩺 DiabetesPredict — Diagnóstico de Diabetes com Machine Learning
+# DiabetesPredict — Diagnóstico de Diabetes com Machine Learning
 
-> Projeto Avaliativo P2 — Algoritmos de Inteligência Artificial — UNIMAR 2026
+Projeto da disciplina de Algoritmos de Inteligência Artificial — UNIMAR 2026
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://SEU_LINK_DO_STREAMLIT_AQUI)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://diabetes-predict-e9r77dqeijdqkadjjlzab4.streamlit.app/)
 
 ---
 
-## 👥 Integrantes e RAs
+## Integrantes
 
 | Nome | RA |
 |---|---|
 | Alan Uesugui Uemura | 2084808 |
 | Julio Cesar Plaza | 2046253 |
-
-
-**Grupo:** 4
+Grupo 4
 
 ---
 
-## 📋 Descrição do Problema
+## O que é esse projeto
 
-O diabetes mellitus é uma doença crônica que afeta milhões de pessoas no mundo. O diagnóstico precoce é fundamental para evitar complicações graves. Este projeto busca construir um modelo de classificação capaz de prever se uma paciente tem diabetes com base em medições clínicas simples, sem necessidade de exames invasivos adicionais.
+Diabetes é uma doença que, quando não diagnosticada a tempo, pode causar complicações sérias. A ideia desse projeto foi treinar um modelo de Machine Learning capaz de prever se uma paciente tem diabetes com base em exames clínicos simples — sem precisar de exames invasivos.
 
----
-
-## 🎯 Objetivo do Projeto
-
-Desenvolver um classificador binário que, a partir de variáveis clínicas (glicose, IMC, pressão arterial, entre outras), seja capaz de prever o diagnóstico de diabetes com alta sensibilidade — priorizando a detecção de casos positivos (alto Recall) sem sacrificar completamente a precisão.
+Usamos o Pima Indians Diabetes Database, que tem dados de 768 mulheres da população Pima Indian, com variáveis como glicose, IMC, pressão arterial e insulina.
 
 ---
 
-## 📊 Dataset Utilizado
+## Objetivo
+
+Construir um classificador binário que prevê se uma paciente é diabética ou não, priorizando o Recall — ou seja, queremos errar menos para o lado de "não detectar quem tem diabetes", porque esse erro tem consequências clínicas mais graves.
+
+---
+
+## Dataset
 
 **Pima Indians Diabetes Database**
 
-- **Fonte:** National Institute of Diabetes and Digestive and Kidney Diseases
-- **Disponível em:** [Kaggle](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database)
-- **Amostras:** 768 mulheres da população Pima Indian
-- **Variáveis preditoras:** 8 (numéricas)
-- **Variável-alvo:** `Outcome` (0 = Não Diabética, 1 = Diabética)
-- **Desbalanceamento:** 65,1% não diabéticas / 34,9% diabéticas
-
-### Variáveis do Dataset
+- Fonte: National Institute of Diabetes and Digestive and Kidney Diseases
+- Disponível em: [Kaggle](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database)
+- 768 amostras, 8 variáveis preditoras numéricas
+- Variável-alvo: `Outcome` (0 = não diabética, 1 = diabética)
+- Dataset desbalanceado: 65,1% não diabéticas / 34,9% diabéticas
 
 | Variável | Descrição |
 |---|---|
 | `Pregnancies` | Número de gestações |
-| `Glucose` | Concentração de glicose no plasma (mg/dL) |
+| `Glucose` | Glicose no plasma (mg/dL) |
 | `BloodPressure` | Pressão arterial diastólica (mmHg) |
-| `SkinThickness` | Espessura da dobra cutânea do tríceps (mm) |
+| `SkinThickness` | Espessura da pele — tríceps (mm) |
 | `Insulin` | Insulina sérica 2h após o teste (mu U/ml) |
 | `BMI` | Índice de Massa Corporal (kg/m²) |
-| `DiabetesPedigreeFunction` | Função que modela a história familiar de diabetes |
-| `Age` | Idade em anos |
-| `Outcome` | Diagnóstico (0 = Não Diabética, 1 = Diabética) — **variável-alvo** |
+| `DiabetesPedigreeFunction` | Histórico familiar de diabetes |
+| `Age` | Idade (anos) |
+| `Outcome` | Diagnóstico — variável-alvo |
 
 ---
 
-## 🤖 Tipo de Problema de Machine Learning
+## Tipo de problema
 
-**Classificação binária supervisionada**
-
-A variável-alvo `Outcome` assume dois valores: 0 (não diabética) ou 1 (diabética). O modelo aprende a partir de exemplos rotulados para prever a classe de novos casos.
+Classificação binária supervisionada.
 
 ---
 
-## 🔬 Metodologia
+## O que fizemos
 
-1. **Análise Exploratória (EDA):** distribuição das classes, zeros suspeitos, outliers, correlações
-2. **Pré-processamento:**
-   - Zeros biologicamente impossíveis substituídos por `NaN` em 5 colunas
-   - Imputação pela mediana via `SimpleImputer` dentro do Pipeline
-   - Normalização via `StandardScaler`
-   - Divisão estratificada 80/20 (treino/teste) com `stratify=y`
-3. **Pipeline sklearn:** evita data leakage — pré-processamento fit apenas no treino
-4. **Tratamento do desbalanceamento:** `class_weight='balanced'` na Regressão Logística e Random Forest
-5. **Validação cruzada estratificada:** `StratifiedKFold(n_splits=5)`
-6. **Otimização de hiperparâmetros:** `GridSearchCV` no Random Forest (scoring=F1)
-7. **Análise estatística:** Teste de Friedman e desvio padrão por fold
-8. **Avaliação final:** conjunto de teste isolado
+1. Análise exploratória dos dados (distribuição das classes, zeros suspeitos, outliers, correlações)
+2. Tratamento dos zeros biologicamente impossíveis — substituídos por NaN e imputados pela mediana
+3. Pipeline sklearn para evitar data leakage
+4. `class_weight='balanced'` para lidar com o desbalanceamento das classes
+5. Validação cruzada estratificada com 5 folds
+6. GridSearchCV para otimizar os hiperparâmetros do Random Forest
+7. Teste de Friedman para verificar se as diferenças entre os modelos são estatisticamente significativas
+8. Avaliação final no conjunto de teste isolado
 
 ---
 
-## 🏋️ Modelos Treinados
+## Modelos treinados
 
-| Modelo | Observação |
+| Modelo | Detalhe |
 |---|---|
-| Regressão Logística | `class_weight='balanced'`, `max_iter=1000` |
-| Gaussian Naive Bayes | Sem parâmetro de balanceamento (não suportado) |
-| Random Forest | `class_weight='balanced'`, `n_estimators=100` |
-| **Random Forest Otimizado** | Melhor combinação encontrada pelo GridSearchCV |
+| Regressão Logística | `class_weight='balanced'` |
+| Gaussian Naive Bayes | sem suporte a class_weight |
+| Random Forest | `class_weight='balanced'` |
+| **Random Forest Otimizado** | melhores hiperparâmetros via GridSearchCV |
 
 ---
 
-## 🏆 Modelo Final Escolhido
+## Modelo escolhido
 
-**Random Forest Otimizado** (via GridSearchCV)
+**Random Forest Otimizado**
 
-**Justificativa:** apresentou o melhor equilíbrio entre F1-Score e AUC-ROC no conjunto de teste, além da maior estabilidade nos folds de validação cruzada. O uso de `class_weight='balanced'` garantiu maior sensibilidade à classe minoritária (diabéticas), reduzindo Falsos Negativos — que em contexto clínico têm consequências mais graves do que alarmes falsos.
-
----
-
-## 📈 Métricas de Avaliação
-
-Métricas utilizadas: **Acurácia, Precisão, Recall, F1-Score, AUC-ROC**
-
-> Os valores exatos das métricas são gerados dinamicamente ao executar o notebook, pois dependem dos hiperparâmetros otimizados pelo GridSearchCV em cada execução.
-
-**Métrica prioritária:** Recall — em diagnóstico clínico, minimizar Falsos Negativos (diabetes não detectada) é mais importante do que minimizar alarmes falsos.
-
-**Análise estatística:** Teste de Friedman aplicado sobre os 5 folds para verificar se as diferenças de desempenho entre modelos são estatisticamente significativas.
+Foi o que teve melhor F1-Score (0,6992) e AUC-ROC (0,8252) no conjunto de teste, e o menor número de Falsos Negativos — só 11 casos de diabetes não detectados, contra 16 da Regressão Logística e 17 do Random Forest sem otimização. Em contexto clínico, esse é o critério mais importante.
 
 ---
 
-## 🏗️ Estrutura dos Arquivos
+## Métricas de avaliação
+
+Usamos Acurácia, Precisão, Recall, F1-Score e AUC-ROC. A métrica prioritária foi o Recall, por conta do contexto clínico.
+
+---
+
+## Resultados principais
+
+| Modelo | Acurácia | Recall | F1 | AUC |
+|---|---|---|---|---|
+| Logistic Regression | 0,7338 | 0,7037 | 0,6496 | 0,8126 |
+| Gaussian NB | 0,7013 | 0,6296 | 0,5965 | 0,7646 |
+| Random Forest | 0,7532 | 0,6852 | 0,6607 | 0,8231 |
+| **RF Otimizado** | **0,7597** | **0,7963** | **0,6992** | **0,8252** |
+
+---
+
+## Estrutura dos arquivos
 
 ```
 diabetes-predict/
 │
-├── app.py                          # Aplicação Streamlit
-├── requirements.txt                # Dependências do projeto
-├── README.md                       # Esta documentação
+├── app.py
+├── requirements.txt
+├── README.md
 │
 ├── notebooks/
-│   └── notebook_atualizado.ipynb   # Notebook revisado (P2)
+│   └── notebook_atualizado.ipynb
 │
 ├── model/
-│   └── modelo_final.joblib         # Modelo final salvo (Pipeline completo)
-│   └── colunas.joblib              # Colunas de entrada do modelo
+│   └── modelo_final.joblib
+│   └── colunas.joblib
 │
 ├── reports/
-│   └── relatorio_atualizado.pdf    # Relatório final em PDF
+│   └── relatorio_atualizado.pdf
 │
 └── data/
-    └── diabetes.csv                # Dataset utilizado
+    └── diabetes.csv
 ```
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias
 
-| Tecnologia | Uso |
-|---|---|
-| Python 3.10+ | Linguagem principal |
-| pandas | Manipulação de dados |
-| numpy | Operações numéricas |
-| matplotlib / seaborn | Visualizações |
-| scikit-learn | Modelagem, pipeline e métricas |
-| scipy | Teste estatístico de Friedman |
-| joblib | Salvamento e carregamento do modelo |
-| Streamlit | Aplicação web interativa |
+Python, pandas, numpy, matplotlib, seaborn, scikit-learn, scipy, joblib, Streamlit.
 
 ---
 
-## ▶️ Como Executar o Notebook
+## Como rodar o notebook
 
 ```bash
-# 1. Clone o repositório
-git clone https://github.com/SEU_USUARIO/diabetes-predict.git
+git clone https://github.com/AlanUesugui/diabetes-predict.git
 cd diabetes-predict
-
-# 2. Instale as dependências
 pip install -r requirements.txt
-
-# 3. Certifique-se de que o arquivo diabetes.csv está em data/
-# (ou na raiz, conforme o caminho usado no notebook)
-
-# 4. Abra o notebook
 jupyter notebook notebooks/notebook_atualizado.ipynb
-
-# 5. Execute todas as células em ordem (Kernel > Restart & Run All)
-# O modelo será salvo automaticamente em model/modelo_final.joblib
 ```
+
+Execute todas as células em ordem. O modelo será salvo automaticamente em `model/modelo_final.joblib`.
 
 ---
 
-## ▶️ Como Executar o App Streamlit Localmente
+## Como rodar o app localmente
 
 ```bash
-# 1. Certifique-se de que o modelo já foi gerado pelo notebook
-# (arquivo model/modelo_final.joblib deve existir)
-
-# 2. Instale as dependências
 pip install -r requirements.txt
-
-# 3. Execute o app
 streamlit run app.py
 ```
 
-O app abrirá automaticamente no navegador em `http://localhost:8501`.
+O app abre no navegador em `http://localhost:8501`.
 
 ---
 
-## 🌐 Link do App Publicado
+## App publicado
 
-**[Acesse o app aqui](https://SEU_LINK_DO_STREAMLIT_AQUI)**
-
-> Deploy realizado via [Streamlit Community Cloud](https://share.streamlit.io)
+**[Acesse aqui](https://SEU_LINK_DO_STREAMLIT_AQUI)**
 
 ---
 
-## ⚠️ Limitações
+## Limitações
 
-- O dataset é relativamente pequeno (768 amostras), o que limita a capacidade de generalização do modelo
-- A população Pima Indian tem características genéticas e metabólicas específicas — o modelo pode não generalizar bem para outras populações
-- Variáveis com alto percentual de zeros suspeitos (Insulin: 48,7%, SkinThickness: 29,6%) introduzem incerteza mesmo após imputação pela mediana
-- O modelo não substitui avaliação médica profissional — deve ser usado apenas como ferramenta de triagem de apoio
-
----
-
-## ✅ Conclusão
-
-O projeto demonstrou que é possível construir um classificador confiável para diagnóstico de diabetes utilizando dados clínicos simples. O Random Forest Otimizado com `class_weight='balanced'` e otimização via GridSearchCV apresentou o melhor desempenho geral, com bom equilíbrio entre Precisão e Recall.
-
-A análise estatística via Teste de Friedman permitiu investigar formalmente se as diferenças entre os modelos são significativas — indo além da comparação visual e atendendo à exigência de maior profundidade analítica.
-
-A aplicação Streamlit permite que qualquer usuário insira dados clínicos e obtenha uma predição imediata, demonstrando o potencial de uso prático do modelo treinado.
+- Dataset pequeno (768 amostras) — o modelo pode não generalizar bem
+- Dados de uma população específica (Pima Indian) — pode não funcionar igual para outros grupos
+- Insulin e SkinThickness têm muitos zeros (48,7% e 29,6%) — mesmo após imputação, há incerteza
+- Não substitui avaliação médica — é uma ferramenta de triagem
 
 ---
 
-*Projeto desenvolvido para fins acadêmicos — UNIMAR 2026*
+## Conclusão
+
+O projeto mostrou que dá para construir um classificador útil para triagem de diabetes com dados clínicos simples. O Random Forest Otimizado foi o que melhor equilibrou detecção de casos positivos e precisão, especialmente depois de tratar o desbalanceamento com `class_weight='balanced'` e otimizar os hiperparâmetros com GridSearchCV.
+
+---
+
+*UNIMAR 2026 — Algoritmos de Inteligência Artificial — Grupo 4*
