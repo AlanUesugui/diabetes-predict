@@ -2,7 +2,7 @@
 
 Projeto da disciplina de Algoritmos de Inteligência Artificial — UNIMAR 2026
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://diabetes-predict-e9r77dqeijdqkadjjlzab4.streamlit.app/)
+**[Acesse aqui](https://diabetes-predict-e9r77dqeijdqkadjjlzab4.streamlit.app/)**
 
 ---
 
