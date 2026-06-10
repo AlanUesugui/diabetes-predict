@@ -165,12 +165,6 @@ O app abre no navegador em `http://localhost:8501`.
 
 ---
 
-## App publicado
-
-**[Acesse aqui](https://diabetes-predict-e9r77dqeijdqkadjjlzab4.streamlit.app/)**
-
----
-
 ## Limitações
 
 - Dataset pequeno (768 amostras) — o modelo pode não generalizar bem
