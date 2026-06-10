@@ -2,7 +2,7 @@
 
 Projeto da disciplina de Algoritmos de Inteligência Artificial — UNIMAR 2026
 
-**[Acesse aqui](https://diabetes-predict-e9r77dqeijdqkadjjlzab4.streamlit.app/)**
+**App publicado:** [https://diabetes-predict-e9r77dqeijdqkadjjlzab4.streamlit.app/](https://diabetes-predict-e9r77dqeijdqkadjjlzab4.streamlit.app/)
 
 ---
 
@@ -12,6 +12,7 @@ Projeto da disciplina de Algoritmos de Inteligência Artificial — UNIMAR 2026
 |---|---|
 | Alan Uesugui Uemura | 2084808 |
 | Julio Cesar Plaza | 2046253 |
+
 Grupo 4
 
 ---
@@ -166,7 +167,7 @@ O app abre no navegador em `http://localhost:8501`.
 
 ## App publicado
 
-**[Acesse aqui](https://SEU_LINK_DO_STREAMLIT_AQUI)**
+**[Acesse aqui](https://diabetes-predict-e9r77dqeijdqkadjjlzab4.streamlit.app/)**
 
 ---
 
